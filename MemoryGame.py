@@ -2,14 +2,8 @@ from _strings import get_guesses
 from type_safety import type_check, options_1_to_
 from random import choices
 from time import sleep
-from os import system, name
+from Utils import screen_cleaner
 
-def clear_screen():
-  print('\r')
-  if name != 'nt':
-    system('clear')
-  if name != 'posix':
-    system('cls')
 
 class MemoryGame:
   __slots__ = ('difficulty', '_secret')
@@ -37,7 +31,7 @@ class MemoryGame:
     self.generate_sequence()
     print("secret:", *self._secret, end='', flush=True)
     sleep(0.7)
-    clear_screen()
+    screen_cleaner()
     
     guesses = self.get_list_from_user()
     # return True if lost(nonEqual), False if won(equal)

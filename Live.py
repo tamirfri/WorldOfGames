@@ -3,6 +3,7 @@ from type_safety import type_check, options_1_to_
 from GuessGame import GuessGame
 from MemoryGame import MemoryGame
 from CurrencyRouletteGame import CurrencyRouletteGame
+from Score import add_score
 
 GAMES = (MemoryGame, GuessGame, CurrencyRouletteGame)
 
@@ -14,4 +15,8 @@ def load_game():
   game = options_1_to_(3, game_to_play)
   difficulty = options_1_to_(5, game_difficulty)
   play_status = GAMES[game-1](difficulty).play()
-  print('lost' if play_status else 'won')
+  if play_status:
+    print('lost')
+  else:
+    print('won')
+    add_score(difficulty) 

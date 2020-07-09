@@ -20,3 +20,16 @@ get_guesses = "Please guess {}th number between 1 to {}: "
 get_nis_guess = "Please guess the amount in ILS₪: "
 
 api_url = "https://free.currconv.com/api/v7/convert?apiKey=7f8fe365884f1c0a86a2&q=USD_ILS&compact=y"
+
+html_response = """<html>
+  <head>
+    <title>Scores Game</title>
+  </head>
+  <body>
+    <h1>{}</h1>
+  </body>
+</html>"""
+
+html_success = 'The score is <div id="score">{}</div>'
+
+html_error = '<div id="score" style="color:red">{}</div>'

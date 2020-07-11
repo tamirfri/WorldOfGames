@@ -12,8 +12,11 @@ def welcome(name: str):
   return hello_name.format(name)
 
 def load_game():
-  game = options_1_to_(3, game_to_play)
-  difficulty = options_1_to_(5, game_difficulty)
+  try:
+    game = options_1_to_(3, game_to_play)
+    difficulty = options_1_to_(5, game_difficulty)
+  except EOFError as err:
+    raise EOFError(f'{err}, please enable "-it" flags in "docker run" command') from err
   play_status = GAMES[game-1](difficulty).play()
   if play_status:
     print('lost')

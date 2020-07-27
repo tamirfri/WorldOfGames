@@ -1,28 +1,27 @@
-FROM python
+FROM python:alpine
 
 WORKDIR /usr/src/app
 
 RUN [ "chmod", "777", "." ] # permissions to create Scores.txt
 
-RUN [ "pip", "install", "--no-cache-dir", "eventlet", "gevent", "gevent-websocket", "flask", "pyxtermjs" ]
+RUN [ "apk", "add", "--no-cache", "build-base" ]
 
+RUN [ "pip", "install", "--no-cache-dir", "--target", ".",\
+ "eventlet", "flask", "pyxtermjs" ] # "gevent", "gevent-websocket"
 
-#ENV FLASK_APP=MainScores.py FLASK_ENV=development
+# patch
+RUN [ "sed", "-i", "s/<body>/<body style='overflow:hidden'>/", "pyxtermjs/index.html" ]
 
-EXPOSE 5000
-
-# open http://localhost:5000/ in browser
-
-#USER nobody
+USER nobody
 
 
 
 COPY *.py ./
 
-# CMD python ./MainGame.py && flask run --host 0.0.0.0
-
-# ENTRYPOINT [ "pyxtermjs", "--debug", "--command", "python", "--cmd-args" ]
-
 CMD [ "python", "./MainScores.py" ]
 
+EXPOSE 5000
+
+# open http://localhost:5000/ in browser
 # EOFError if not using "-it" flags in docker run
+# docker run -tip 5000:5000...

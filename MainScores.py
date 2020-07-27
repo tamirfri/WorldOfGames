@@ -1,3 +1,4 @@
+#!/bin/env python3
 from Utils import SCORES_FILE_NAME
 from pathlib import Path
 from pyxtermjs.app import app, socketio, index
@@ -6,18 +7,36 @@ from werkzeug.routing import Map
 app.url_map = Map()
 
 @app.route('/score')
-def score_server():
+def score_frame():
   scores_file = Path(SCORES_FILE_NAME)
   try:
-    return scores_file.read_text()
-  except Exception:
-    return "0"
+    score = scores_file.read_text()
+  except:
+    score = '0'
+  return """<html>
+<head>
+  <title>Score</title>
+  <meta http-equiv="refresh" content="8"/>
+</head>
+<body style="overflow:hidden">
+  <h1><strong id="score" style="color:red">{}</strong></h1>
+</body>
+</html>""".format(score)
 
 app.add_url_rule('/terminal', 'index', index)
 
 @app.route('/')
 def main_page():
-  return 'hello world'
+  return """<html>
+<head>
+  <title>Tamir Fridman - Game</title>
+</head>
+<body style="overflow:hidden">
+  <h1 style="height:35px;float:left;margin:6px">The score is</h1>
+  <iframe height="45px" style="border:none;float:left;overflow:hidden" src="/score" title="score"></iframe>
+  <iframe width="100%" style="height:calc(100% - 45px);border:none;float:left;overflow:hidden" src="/terminal" title="terminal"></iframe>
+</body>
+</html>"""
 
 app.config['cmd'] = ('python', '-i', './MainGame.py')
-socketio.run(app, '0.0.0.0', '5000', debug=True, use_reloader=True, extra_files=(SCORES_FILE_NAME,))
+socketio.run(app, '0.0.0.0', '5000', debug=True, use_reloader=False)

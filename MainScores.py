@@ -3,6 +3,8 @@ from Utils import SCORES_FILE_NAME
 from pathlib import Path
 from pyxtermjs.app import app, socketio, index
 from werkzeug.routing import Map
+from threading import Timer
+from _thread import interrupt_main
 
 app.url_map = Map()
 
@@ -25,8 +27,6 @@ def score_frame():
 
 app.add_url_rule('/terminal', 'index', index)
 
-app.add_url_rule('/stop', 'stop', exit)
-
 @app.route('/')
 def main_page():
   return """<html>
@@ -39,6 +39,11 @@ def main_page():
   <iframe width="100%" style="height:calc(100% - 45px);border:none;float:left;overflow:hidden" src="/terminal" title="terminal"></iframe>
 </body>
 </html>"""
+
+@app.route('/stop')
+def stop():
+  Timer(1, interrupt_main).start()
+  return "exit"
 
 app.config['cmd'] = ('python', '-i', './MainGame.py')
 socketio.run(app, '0.0.0.0', '5000', debug=True, use_reloader=False)

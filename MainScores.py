@@ -25,6 +25,8 @@ def score_frame():
 
 app.add_url_rule('/terminal', 'index', index)
 
+app.add_url_rule('/stop', 'stop', exit)
+
 @app.route('/')
 def main_page():
   return """<html>

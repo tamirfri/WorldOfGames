@@ -6,7 +6,7 @@ RUN [ "chmod", "777", "." ] # permissions to create Scores.txt
 
 RUN [ "apk", "add", "--no-cache", "build-base" ]
 
-RUN [ "pip", "install", "--no-cache-dir", "--target", ".",\
+RUN [ "pip3", "install", "--no-cache-dir", "--target", ".",\
  "eventlet", "flask", "pyxtermjs" ] # "gevent", "gevent-websocket"
 
 # patch
@@ -18,7 +18,7 @@ USER nobody
 
 COPY *.py ./
 
-CMD [ "python", "./MainScores.py" ]
+CMD [ "python3", "./MainScores.py" ]
 
 EXPOSE 5000
 

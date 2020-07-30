@@ -1,2 +1,2 @@
 #!/bin/sh
-docker run -p 5000:5000 $1
+docker run -tip 5000:5000 $1

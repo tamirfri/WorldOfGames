@@ -42,7 +42,7 @@ def main_page():
 
 @app.route('/stop')
 def stop():
-  Timer(1, interrupt_main).start()
+  Timer(0.1, interrupt_main).start()
   return "exit"
 
 app.config['cmd'] = ('python', '-i', './MainGame.py')

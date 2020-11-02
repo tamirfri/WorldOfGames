@@ -28,7 +28,7 @@ def type_check(func):
 
 @type_check
 def int_or_none(parse: str):
-  if parse.isnumeric():
+  if parse.isdigit():
     return int(parse)
 
 @type_check
